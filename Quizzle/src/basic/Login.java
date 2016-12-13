@@ -46,7 +46,7 @@ public class Login {
 					boolean found = false;
 					try {
 						ReadFile file = new ReadFile(
-								"U:\\Year 12\\Computer Science\\Main WorkSpace\\Quizzle\\login.txt");
+								"login.txt");
 						String[] arrayLines = file.OpenFile();
 						int i;
 						for (i = 0; i < arrayLines.length; i++) {
@@ -79,7 +79,7 @@ public class Login {
 					passwordCheck = password.getText();
 					try {
 						WriteFile file = new WriteFile(
-								"U:\\Year 12\\Computer Science\\Main WorkSpace\\Quizzle\\login.txt", true);
+								"login.txt", true);
 						
 						file.writeToFile(usernameCheck);
 						file.writeToFile(passwordCheck);

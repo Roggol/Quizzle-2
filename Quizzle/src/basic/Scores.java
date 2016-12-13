@@ -2,18 +2,18 @@ package basic;
 
 public class Scores {
     private int score;
-    private String naam;
+    private String user;
 
     public int getScore() {
         return score;
     }
 
-    public String getNaam() {
-        return naam;
+    public String getUser() {
+        return user;
     }
 
-    public Scores(String naam, int score) {
+    public Scores(String user, int score) {
         this.score = score;
-        this.naam = naam;
+        this.user = user;
     }
 }

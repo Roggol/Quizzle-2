@@ -54,11 +54,11 @@ GUImanager g = new GUImanager();
 			addScore("--", 0);
 			sort();
 			
-			top1 = "1. " + scores.get(0).getNaam() + " " + scores.get(0).getScore();
-			top2 = "2. " + scores.get(1).getNaam() + " " + scores.get(1).getScore();
-			top3 = "3. " + scores.get(2).getNaam() + " " + scores.get(2).getScore();
-			top4 = "4. " + scores.get(3).getNaam() + " " + scores.get(3).getScore();
-			top5 = "5. " + scores.get(4).getNaam() + " " + scores.get(4).getScore();
+			top1 = "1. " + scores.get(0).getUser() + " " + scores.get(0).getScore();
+			top2 = "2. " + scores.get(1).getUser() + " " + scores.get(1).getScore();
+			top3 = "3. " + scores.get(2).getUser() + " " + scores.get(2).getScore();
+			top4 = "4. " + scores.get(3).getUser() + " " + scores.get(3).getScore();
+			top5 = "5. " + scores.get(4).getUser() + " " + scores.get(4).getScore();
 		
 		
 		scoresList1 = new JLabel(top1);
@@ -109,22 +109,6 @@ GUImanager g = new GUImanager();
 	public void addScore(String name, int score) {
         scores.add(new Scores(name, score));
 }
-	public String getHighscoreString(ArrayList<Scores> scores) {
-        String highscoreString = "";
-        int max = 5;  
-
-        int x = scores.size();
-        if (x > max) {
-            x = max;
-        }
-        for(int i=0; i<x; i++){
-            highscoreString += (i + 1) + ".\t" + scores.get(i).getNaam() + "\t\t" + scores.get(i).getScore() + "\n";
-      
-        }
-        return highscoreString;
-}
-	
-
 
 
 	@Override

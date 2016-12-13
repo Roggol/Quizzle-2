@@ -235,7 +235,7 @@ public class GUI extends JFrame implements ActionListener {
 		int highScoreFromFile = 0;
 		try {
 			ReadFile file = new ReadFile(
-					"U:\\Year 12\\Computer Science\\Main WorkSpace\\Quizzle\\scores.txt");
+					"scores.txt");
 			String[] arrayLines = file.OpenFile();
 
 			String Highscore = "";
@@ -243,10 +243,10 @@ public class GUI extends JFrame implements ActionListener {
 
 			int i;
 			WriteFile writer = new WriteFile(
-					"U:\\Year 12\\Computer Science\\Main WorkSpace\\Quizzle\\scores.txt",
+					"scores.txt",
 					false);
 			WriteFile writer1 = new WriteFile(
-					"U:\\Year 12\\Computer Science\\Main WorkSpace\\Quizzle\\scores.txt",
+					"scores.txt",
 					true);
 			writer.writeToFile("Username,Password");
 			for (i = 0; i < arrayLines.length; i++) {
