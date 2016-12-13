@@ -34,6 +34,7 @@ public class GUImanager {
 	    if (originalFont == null) { // First time we call it: add it
 	        originalFont = label.getFont();
 	        label.putClientProperty("originalfont", originalFont);
+	        //test
 	    }
 
 	    int stringWidth = label.getFontMetrics(originalFont).stringWidth(text);

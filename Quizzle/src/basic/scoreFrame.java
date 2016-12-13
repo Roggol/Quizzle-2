@@ -59,7 +59,7 @@ GUImanager g = new GUImanager();
 			top3 = "3. " + scores.get(2).getUser() + " " + scores.get(2).getScore();
 			top4 = "4. " + scores.get(3).getUser() + " " + scores.get(3).getScore();
 			top5 = "5. " + scores.get(4).getUser() + " " + scores.get(4).getScore();
-		
+		//
 		
 		scoresList1 = new JLabel(top1);
 		scoresList1.setSize (600, 50);

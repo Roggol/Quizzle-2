@@ -321,7 +321,7 @@ public class GUI extends JFrame implements ActionListener {
 				blueLabel = "A dog";
 				answer = 'A';
 				break;
-
+//
 			case 4:
 				questionLabel = "If 4 is less than 5 and 5 is less than 6, what does this have to do with history?";
 				redLabel = "8";

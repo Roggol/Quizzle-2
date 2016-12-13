@@ -122,7 +122,7 @@ public class Login {
 		frame = new JFrame("Quizzle");
 		frame.setSize(height, width);
 		// frame.setLayout(new GridLayout(6,3));
-
+//
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
 		panel.setLayout(new FlowLayout());
