@@ -24,6 +24,7 @@ public class Startup extends JFrame implements ActionListener {
 	private JPanel panel;
 	JButton start;
 	JLabel userName;
+	JLabel quizName;
 	JButton scores;
 	private JComboBox c = new JComboBox();
 	private JTextField t = new JTextField(15);
@@ -34,7 +35,7 @@ public class Startup extends JFrame implements ActionListener {
 	private String[] description = { "Maths", "History", "Science", "Games",
 			"Misc" };
 
-	public Startup(final String username) {
+	public Startup(final String username, final String quizName) {
 
 		prepareGUI();
 
@@ -54,7 +55,7 @@ public class Startup extends JFrame implements ActionListener {
 					
 					try {
 						ReadFile file = new ReadFile(
-								"U:\\Year 12\\Computer Science\\Main WorkSpace\\Quizzle\\scores.txt");
+								quizName + "\\scores.txt");
 						String[] arrayLines = file.OpenFile();
 						new scoreFrame(arrayLines);
 						

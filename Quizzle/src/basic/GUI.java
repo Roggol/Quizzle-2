@@ -118,9 +118,9 @@ public class GUI extends JFrame implements ActionListener {
 		blueButton.setLocation(700, 700);
 		quizQuestion.setLocation(150, 250);
 		quizTitle.setLocation(300, 90);
-		scoreTrack.setLocation(1500, 200);
-		lastAnswer.setLocation(1500, 500);
-		lastAnswerButton.setLocation(1600, 620);
+		scoreTrack.setLocation(1700, 200);
+		lastAnswer.setLocation(1700, 500);
+		lastAnswerButton.setLocation(1700, 620);
 
 		panel.setLayout(null);
 
