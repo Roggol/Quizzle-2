@@ -48,7 +48,7 @@ public class GUI extends JFrame implements ActionListener {
 	int score = 0;
 	boolean setup = true;
 
-	public GUI(final String username) {
+	public GUI(final String username, final String quizName) {
 		// g.prepareGUI(frame, panel, height, width);
 		// prepareGUI(frame, panel, height, width);
 		prepareGUI();
@@ -79,7 +79,7 @@ public class GUI extends JFrame implements ActionListener {
 				if (event.getSource() == blueButton) {
 					buttonPressed = 'D';
 				}
-				CheckAnswer(username);
+				CheckAnswer(username, quizName);
 
 			}
 
@@ -164,7 +164,7 @@ public class GUI extends JFrame implements ActionListener {
 		// }
 	}
 
-	private void CheckAnswer(String username) {
+	private void CheckAnswer(String username, String quizName) {
 		if (buttonPressed == answer) {
 			score++;
 			scoreTrack.setText("Score: " + score);
@@ -179,13 +179,13 @@ public class GUI extends JFrame implements ActionListener {
 							"That makes you a genius, or an idiot.");
 					JOptionPane.showMessageDialog(null,
 							"But congratulations either way!");
-					logScore(username, score);
+					logScore(username,quizName,score);
 					System.exit(0);
 
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"You win I guess, try again for a score of 42");
-					logScore(username, score);
+					logScore(username,quizName,score);
 					System.exit(0);
 
 				}
@@ -230,24 +230,20 @@ public class GUI extends JFrame implements ActionListener {
 
 	}
 
-	private void logScore(String username, int score) {
+	private void logScore(String username, String quizName,int score) {
 		boolean found = false;
 		int highScoreFromFile = 0;
 		try {
 			ReadFile file = new ReadFile(
-					"scores.txt");
+					quizName + "\\scores.txt");
 			String[] arrayLines = file.OpenFile();
 
 			String Highscore = "";
 			String[] configstring = new String[2];
 
 			int i;
-			WriteFile writer = new WriteFile(
-					"scores.txt",
-					false);
-			WriteFile writer1 = new WriteFile(
-					"scores.txt",
-					true);
+			WriteFile writer = new WriteFile(quizName + "\\scores.txt",false);
+			WriteFile writer1 = new WriteFile(quizName + "\\scores.txt",true);
 			writer.writeToFile("Username,Password");
 			for (i = 0; i < arrayLines.length; i++) {
 				if (arrayLines[i].contains(username)) {

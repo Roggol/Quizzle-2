@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class QuizMaker extends JFrame implements ActionListener {
+public class QuizChoose extends JFrame implements ActionListener {
 
 	GUImanager g = new GUImanager();
 
@@ -37,7 +37,7 @@ public class QuizMaker extends JFrame implements ActionListener {
 	int width = 720;
 	
 
-	public QuizMaker(final String username) {
+	public QuizChoose(final String username) {
 
 		prepareGUI();
 
@@ -50,6 +50,7 @@ public class QuizMaker extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				if (event.getSource() == newQuiz) {
+					//create quiz
 					quizName = quizMaker.getText();
 					File dir = new File(quizName);
 					dir.mkdir();
@@ -61,11 +62,12 @@ public class QuizMaker extends JFrame implements ActionListener {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					new Startup(username, quizName);
+					new QuestionNumber(username, quizName);
 					frame.setVisible(false);
 					frame.dispose();
 				}
 				if(event.getSource() == oldQuiz){
+					// use existing quiz
 					quizName = quizMaker.getText();
 					if (Files.isDirectory(Paths.get(quizName))) {
 						new Startup(username, quizName);

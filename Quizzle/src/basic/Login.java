@@ -59,7 +59,7 @@ public class Login {
 
 							}
 						}if(found == true){
-							new QuizMaker(usernameCheck);
+							new QuizChoose(usernameCheck);
 							frame.setVisible(false);
 							frame.dispose();
 						}else{

@@ -26,14 +26,8 @@ public class Startup extends JFrame implements ActionListener {
 	JLabel userName;
 	JLabel quizName;
 	JButton scores;
-	private JComboBox c = new JComboBox();
-	private JTextField t = new JTextField(15);
-	private JButton b = new JButton("Select");
-	private int count = 0;
 	int height = 1000;
 	int width = 720;
-	private String[] description = { "Maths", "History", "Science", "Games",
-			"Misc" };
 
 	public Startup(final String username, final String quizName) {
 
@@ -47,7 +41,7 @@ public class Startup extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				if (event.getSource() == start) {
-					new GUI(username);
+					new GUI(username,quizName);
 					frame.setVisible(false);
 					frame.dispose();
 				}
@@ -58,6 +52,7 @@ public class Startup extends JFrame implements ActionListener {
 								quizName + "\\scores.txt");
 						String[] arrayLines = file.OpenFile();
 						new scoreFrame(arrayLines);
+						//System.out.println(""+ arrayLines[0]);
 						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
