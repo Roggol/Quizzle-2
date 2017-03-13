@@ -26,12 +26,12 @@ public class QuizMaker extends JFrame implements ActionListener {
 	JLabel userName;
 	JLabel quizName;
 	JButton back;
-	JLabel questionTitle;
-	JLabel AnswerA;
-	JLabel AnswerB;
-	JLabel AnswerC;
-	JLabel AnswerD;
-	JLabel Answer;
+	JTextField questionTitle;
+	JTextField AnswerA;
+	JTextField AnswerB;
+	JTextField AnswerC;
+	JTextField AnswerD;
+	JTextField Answer;
 	String[] configstring;
 	private int count = 0;
 	int height = 1000;
@@ -44,12 +44,12 @@ public class QuizMaker extends JFrame implements ActionListener {
 		next = new JButton("Next -->");
 		userName = new JLabel("Welcome: " + username);
 		back = new JButton("<-- back");
-		questionTitle = new JLabel("Quiz Title");
-		AnswerA = new JLabel ("A: ");
-		AnswerB = new JLabel ("B: ");
-		AnswerC = new JLabel ("C: ");
-		AnswerD = new JLabel ("D: ");
-		Answer = new JLabel ("Correct Answer (A,B,C or D)");
+		questionTitle = new JTextField("Quiz Title");
+		AnswerA = new JTextField ("A: ");
+		AnswerB = new JTextField ("B: ");
+		AnswerC = new JTextField ("C: ");
+		AnswerD = new JTextField ("D: ");
+		Answer = new JTextField ("Correct Answer (A,B,C or D)");
 		
 		ActionListener listener = new ActionListener() {
 
@@ -102,7 +102,6 @@ public class QuizMaker extends JFrame implements ActionListener {
 						ReadFile file = new ReadFile(
 								quizName + "\\scores.txt");
 						String[] arrayLines = file.OpenFile();
-						new scoreFrame(arrayLines);
 						//System.out.println(""+ arrayLines[0]);
 						
 					} catch (IOException e) {
