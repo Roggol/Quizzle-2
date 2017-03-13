@@ -62,6 +62,22 @@ public class QuizChoose extends JFrame implements ActionListener {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					try{
+						File file = new File (quizName + "//questionNumber.txt");
+						PrintWriter printWriter = new PrintWriter (file);
+						printWriter.close ();
+					}catch(IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try{
+						File file = new File (quizName + "//questions.txt");
+						PrintWriter printWriter = new PrintWriter (file);
+						printWriter.close ();
+					}catch(IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					new QuestionNumber(username, quizName);
 					frame.setVisible(false);
 					frame.dispose();

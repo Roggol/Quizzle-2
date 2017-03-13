@@ -48,7 +48,7 @@ public class GUI extends JFrame implements ActionListener {
 	int score = 0;
 	boolean setup = true;
 
-	public GUI(final String username, final String quizName) {
+	public GUI(final String username, final String quizName, int number) {
 		// g.prepareGUI(frame, panel, height, width);
 		// prepareGUI(frame, panel, height, width);
 		prepareGUI();
@@ -640,15 +640,7 @@ public class GUI extends JFrame implements ActionListener {
 
 			}
 
-			/*
-			g.setTextFit(quizTitle, quizLabel);
-			g.setTextFit(redButton, "A: " + redLabel);
-			g.setTextFit(yellowButton, "B: " + yellowLabel);
-			g.setTextFit(greenButton, "C: " + greenLabel);
-			g.setTextFit(blueButton, "D: " + blueLabel);
-			*/
 			g.setTextFit(quizQuestion, questionLabel);
-			//quizQuestion.setText(questionLabel);
 			quizTitle.setText(quizLabel);
 			redButton.setText("A: " + redLabel);
 			yellowButton.setText("B: " + yellowLabel);

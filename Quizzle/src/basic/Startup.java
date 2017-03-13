@@ -26,6 +26,8 @@ public class Startup extends JFrame implements ActionListener {
 	JLabel userName;
 	JLabel quizName;
 	JButton scores;
+	String questionNumber;
+	int questionNum = 1;
 	int height = 1000;
 	int width = 720;
 
@@ -41,7 +43,19 @@ public class Startup extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				if (event.getSource() == start) {
-					new GUI(username,quizName);
+					try {
+						ReadFile file = new ReadFile(
+								quizName + "\\questionNumber.txt");
+						String[] arrayLines = file.OpenFile();
+						questionNumber = arrayLines[0];
+						questionNum = Integer.parseInt(questionNumber);
+						//System.out.println(""+ arrayLines[0]);
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					new GUI(username,quizName, questionNum);
 					frame.setVisible(false);
 					frame.dispose();
 				}

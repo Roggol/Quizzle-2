@@ -62,6 +62,13 @@ public class QuestionNumber extends JFrame implements ActionListener {
 							JOptionPane.showMessageDialog(null, "Not an integer, default selected (10)");
 						}
 						new QuizMaker(username,quizName,questionNoInt);
+						try {
+							WriteFile writer = new WriteFile(quizName + "\\scores.txt",true);
+							writer.writeToFile("" + questionNoInt);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						frame.setVisible(false);
 						frame.dispose();
 					}catch (java.lang.NumberFormatException e) {
