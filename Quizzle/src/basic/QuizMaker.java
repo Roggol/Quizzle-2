@@ -105,7 +105,7 @@ public class QuizMaker extends JFrame implements ActionListener {
 							ReadFile file = new ReadFile(
 									quizName + "\\questions.txt");
 							String[] arrayLines = file.OpenFile();
-							if (!(count+1 > arrayLines.length)){
+							if (!(count+1 == arrayLines.length)){
 								configstring = arrayLines[count+1].split(",");
 								String qTitle = configstring[0];
 								System.out.println("" + count + " " + arrayLines.length);
