@@ -58,6 +58,7 @@ public class QuizMaker extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				if (event.getSource() == next) {
+					back.setVisible(true);
 
 					if(!(Answer.getText().equals("A")||Answer.getText().equals("B")||Answer.getText().equals("C")||Answer.getText().equals("D"))){
 						JOptionPane.showMessageDialog(null, "Not a valid Answer");
@@ -81,16 +82,20 @@ public class QuizMaker extends JFrame implements ActionListener {
 								WriteFile writer = new WriteFile(quizName + "\\questions.txt",false);
 								WriteFile writer1 = new WriteFile(quizName + "\\questions.txt",true);
 								writer.writeToFile("questionTitle, AnswerA, AnswerB, AnswerC, AnswerD");
+								int length = arrayLines.length + 2;
 							
-								for (int i = 0; i < arrayLines.length; i++) {
-									if (i == 0 || i == count) {
-										// do nothing
-									} else {
+								for (int i = 0; i < length; i++) {
+									if (i == 0) {
+										//do nothing
+									}
+									else if(i == count-1){
+										writer1.writeToFile(questionTitle.getText() + "," + AnswerA.getText() + "," + AnswerB.getText() + "," + AnswerC.getText() + "," + AnswerD.getText() + "," + Answer.getText());
+									}else if(i < arrayLines.length){
 										writer1.writeToFile(arrayLines[i]);
 									}
 
 								}
-								writer1.writeToFile(questionTitle.getText() + "," + AnswerA.getText() + "," + AnswerB.getText() + "," + AnswerC.getText() + "," + AnswerD.getText() + "," + Answer.getText());
+								
 							
 							} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -105,10 +110,9 @@ public class QuizMaker extends JFrame implements ActionListener {
 							ReadFile file = new ReadFile(
 									quizName + "\\questions.txt");
 							String[] arrayLines = file.OpenFile();
-							if (!(count+1 == arrayLines.length)){
-								configstring = arrayLines[count+1].split(",");
+							if (!(count >= arrayLines.length)){
+								configstring = arrayLines[count].split(",");
 								String qTitle = configstring[0];
-								System.out.println("" + count + " " + arrayLines.length);
 								questionTitle.setText(qTitle);
 								AnswerA.setText(configstring[1]);
 								AnswerB.setText(configstring[2]);
@@ -137,7 +141,6 @@ public class QuizMaker extends JFrame implements ActionListener {
 						String[] arrayLines = file.OpenFile();
 						configstring = arrayLines[count].split(",");
 						String qTitle = configstring[0];
-						System.out.println("" + count);
 						questionTitle.setText(qTitle);
 						AnswerA.setText(configstring[1]);
 						AnswerB.setText(configstring[2]);
