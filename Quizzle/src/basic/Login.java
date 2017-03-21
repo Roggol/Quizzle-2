@@ -83,7 +83,6 @@ public class Login {
 						
 						file.writeToFile(usernameCheck);
 						file.writeToFile(passwordCheck);
-						System.out.println("Test");
 						
 					}catch (IOException e) {
 						// TODO Auto-generated catch block
