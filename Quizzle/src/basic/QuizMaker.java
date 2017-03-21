@@ -58,8 +58,6 @@ public class QuizMaker extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				if (event.getSource() == next) {
-					back.setVisible(true);
-
 					if(!(Answer.getText().equals("A")||Answer.getText().equals("B")||Answer.getText().equals("C")||Answer.getText().equals("D"))){
 						JOptionPane.showMessageDialog(null, "Not a valid Answer");
 					}else{

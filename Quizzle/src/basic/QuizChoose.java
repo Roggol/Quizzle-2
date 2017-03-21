@@ -31,6 +31,7 @@ public class QuizChoose extends JFrame implements ActionListener {
 	JButton newQuiz;
 	JLabel userName;
 	JButton oldQuiz;
+	JButton back;
 	JTextField quizMaker;
 	String quizName;
 	int height = 1000;
@@ -95,6 +96,12 @@ public class QuizChoose extends JFrame implements ActionListener {
 					}
 						
 				}
+				if(event.getSource() == back){
+					new Login();
+					frame.setVisible(false);
+					frame.dispose();
+					
+				}
 
 			}
 
@@ -113,6 +120,13 @@ public class QuizChoose extends JFrame implements ActionListener {
 		quizMaker.setSize (100, 50);
 		quizMaker.setLocation(840, 580);
 		
+		back = new JButton("Log out");
+		back.addActionListener(listener);
+		back.setFocusable(false);
+		back.setBackground(Color.GRAY);
+		back.setSize(100, 50);
+		back.setLocation(840, 630);
+		
 		userName.setSize (600, 50);
 		userName.setLocation(1300, 100);
 		panel.setLayout(null);
@@ -120,6 +134,7 @@ public class QuizChoose extends JFrame implements ActionListener {
 		panel.add(userName);
 		panel.add(oldQuiz);
 		panel.add(quizMaker);
+		panel.add(back);
 		frame.add(panel);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setVisible(true);

@@ -49,9 +49,9 @@ public class QuestionNumber extends JFrame implements ActionListener {
 					questionNo = questionNumber.getText();
 					try{
 						questionNoInt = Integer.parseInt(questionNo);
-						if(questionNoInt < 1){
-							questionNoInt = 1;
-							JOptionPane.showMessageDialog(null, "Integer too low. 1 Selected");
+						if(questionNoInt < 2){
+							questionNoInt = 2;
+							JOptionPane.showMessageDialog(null, "Integer too low. 2 Selected");
 						}else if(questionNoInt>20){
 							questionNoInt=20;
 							JOptionPane.showMessageDialog(null, "Integer too high. 20 selected");
@@ -63,7 +63,7 @@ public class QuestionNumber extends JFrame implements ActionListener {
 						}
 						new QuizMaker(username,quizName,questionNoInt);
 						try {
-							WriteFile writer = new WriteFile(quizName + "\\scores.txt",true);
+							WriteFile writer = new WriteFile(quizName + "\\questionNumber.txt",true);
 							writer.writeToFile("" + questionNoInt);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block

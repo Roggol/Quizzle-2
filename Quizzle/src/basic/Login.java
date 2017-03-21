@@ -103,6 +103,7 @@ public class Login {
 		signUp.setBackground(Color.GRAY);
 		signUp.setSize(100, 50);
 		signUp.setLocation(1000, 530);
+		
 
 		username.setSize(100, 50);
 		password.setSize(100, 50);

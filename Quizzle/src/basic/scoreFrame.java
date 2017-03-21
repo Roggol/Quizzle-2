@@ -1,5 +1,6 @@
 package basic;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,6 +25,7 @@ GUImanager g = new GUImanager();
 	JLabel scoresList3;
 	JLabel scoresList4;
 	JLabel scoresList5;
+	JButton back;
 	String Highscore;
 	int highScoreFromFile;
 	String top1;
@@ -35,7 +38,7 @@ GUImanager g = new GUImanager();
 
 
 	
-	public scoreFrame(String[] arrayLines){
+	public scoreFrame(String[] arrayLines, final String username, final String quizName){
 		prepareGUI();
 		int i;
         scores = new ArrayList<Scores>();
@@ -47,11 +50,11 @@ GUImanager g = new GUImanager();
 			addScore(configstring[0], highScoreFromFile);
 			
 		}
-			addScore("--", 0);
-			addScore("--", 0);
-			addScore("--", 0);
-			addScore("--", 0);
-			addScore("--", 0);
+			addScore("---", 0);
+			addScore("---", 0);
+			addScore("---", 0);
+			addScore("---", 0);
+			addScore("---", 0);
 			sort();
 			
 			top1 = "1. " + scores.get(0).getUser() + " " + scores.get(0).getScore();
@@ -60,6 +63,25 @@ GUImanager g = new GUImanager();
 			top4 = "4. " + scores.get(3).getUser() + " " + scores.get(3).getScore();
 			top5 = "5. " + scores.get(4).getUser() + " " + scores.get(4).getScore();
 		//
+			ActionListener listener = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent event) {
+					if(event.getSource() == back){
+						new Startup(username, quizName);
+						frame.setVisible(false);
+						frame.dispose();
+						
+					}
+					
+				}
+			};
+
+		back = new JButton("<-- back");
+		back.addActionListener(listener);
+		back.setFocusable(false);
+		back.setBackground(Color.GRAY);
+		back.setSize(100, 50);
+		back.setLocation(400, 480);
 		
 		scoresList1 = new JLabel(top1);
 		scoresList1.setSize (600, 50);
@@ -86,6 +108,7 @@ GUImanager g = new GUImanager();
 		panel.add(scoresList3);
 		panel.add(scoresList4);
 		panel.add(scoresList5);
+		panel.add(back);
 		frame.add(panel);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
@@ -109,11 +132,11 @@ GUImanager g = new GUImanager();
 	public void addScore(String name, int score) {
         scores.add(new Scores(name, score));
 }
-
-
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 }

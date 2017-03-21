@@ -33,7 +33,7 @@ public class GUI extends JFrame implements ActionListener {
 	JLabel scoreTrack;
 	int height = 1920;
 	int width = 1080;
-	int noOfQuestions = 1;
+	int qNumber = 1;
 	JLabel lastAnswer;
 	JButton lastAnswerButton;
 	char answer;
@@ -41,7 +41,7 @@ public class GUI extends JFrame implements ActionListener {
 	int score = 0;
 	boolean setup = true;
 
-	public GUI(final String username, final String quizName, final int questionNumber) {
+	public GUI(final String username, final String quizName, final int noOfQs) {
 		// g.prepareGUI(frame, panel, height, width);
 		// prepareGUI(frame, panel, height, width);
 		prepareGUI();
@@ -72,7 +72,7 @@ public class GUI extends JFrame implements ActionListener {
 				if (event.getSource() == blueButton) {
 					buttonPressed = 'D';
 				}
-				CheckAnswer(username, quizName, questionNumber, noOfQuestions);
+				CheckAnswer(username, quizName, noOfQs);
 
 			}
 
@@ -152,20 +152,20 @@ public class GUI extends JFrame implements ActionListener {
 
 		frame.setVisible(true);
 
-		Prep(quizName, questionNumber);
+		Prep(quizName);
 
 		// }
 	}
 
-	private void CheckAnswer(String username, String quizName, int questionNumber, int noOfQuestions) {
+	private void CheckAnswer(String username, String quizName, int noOfQuestions) {
 		try {
 			String[] configstring;
 			ReadFile file = new ReadFile(
 					quizName + "\\questions.txt");
 			String[] arrayLines = file.OpenFile();
-			configstring = arrayLines[questionNumber].split(",");
+			configstring = arrayLines[qNumber].split(",");
 			String AnswerString = configstring[5];
-			///dsjwds
+			answer = AnswerString.charAt(0);
 			
 		} catch (IOException e) {
 		// TODO Auto-generated catch block
@@ -178,9 +178,12 @@ public class GUI extends JFrame implements ActionListener {
 			lastAnswerButton.setBackground(Color.GREEN);
 			lastAnswerButton.setText(" :)");
 
-			if (questionNumber == noOfQuestions ) {
+			if (qNumber == noOfQuestions ) {
 					logScore(username,quizName,score);
-					System.exit(0);
+					JOptionPane.showMessageDialog(null, "You scored: " + score + " out of " + noOfQuestions );
+					new QuizChoose(username);
+					frame.setVisible(false);
+					frame.dispose();
 
 				
 			}
@@ -188,9 +191,9 @@ public class GUI extends JFrame implements ActionListener {
 			lastAnswerButton.setBackground(Color.RED);
 			lastAnswerButton.setText(" :(");
 		}
-		questionNumber++;
+		qNumber++;
 		setup = true;
-		Prep(quizName, questionNumber);
+		Prep(quizName);
 
 	}
 
@@ -251,7 +254,7 @@ public class GUI extends JFrame implements ActionListener {
 
 	}
 
-	private void Prep(String quizName, int num) {
+	private void Prep(String quizName) {
 		if (setup == true) {
 			
 			try {
@@ -259,7 +262,7 @@ public class GUI extends JFrame implements ActionListener {
 				ReadFile file = new ReadFile(
 						quizName + "\\questions.txt");
 				String[] arrayLines = file.OpenFile();
-				configstring = arrayLines[num].split(",");
+				configstring = arrayLines[qNumber].split(",");
 				String qTitle = configstring[0];
 
 				g.setTextFit(quizQuestion, qTitle);

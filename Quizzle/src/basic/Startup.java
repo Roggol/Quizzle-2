@@ -26,6 +26,7 @@ public class Startup extends JFrame implements ActionListener {
 	JLabel userName;
 	JLabel quizName;
 	JButton scores;
+	JButton back;
 	String questionNumber;
 	int questionNum = 1;
 	int height = 1000;
@@ -65,13 +66,19 @@ public class Startup extends JFrame implements ActionListener {
 						ReadFile file = new ReadFile(
 								quizName + "\\scores.txt");
 						String[] arrayLines = file.OpenFile();
-						new scoreFrame(arrayLines);
+						new scoreFrame(arrayLines, username, quizName);
 						//System.out.println(""+ arrayLines[0]);
 						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
+				}
+				if(event.getSource() == back){
+					new QuizChoose(username);
+					frame.setVisible(false);
+					frame.dispose();
 					
 				}
 
@@ -89,9 +96,17 @@ public class Startup extends JFrame implements ActionListener {
 		scores.setSize(100, 50);
 		scores.setLocation(840, 530);
 		
+		back = new JButton("Back");
+		back.addActionListener(listener);
+		back.setFocusable(false);
+		back.setBackground(Color.GRAY);
+		back.setSize(100, 50);
+		back.setLocation(840, 580);
+		
 		userName.setSize (600, 50);
 		userName.setLocation(1300, 100);
 		panel.setLayout(null);
+		panel.add(back);
 		panel.add(start);
 		panel.add(userName);
 		panel.add(scores);
