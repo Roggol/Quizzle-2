@@ -68,6 +68,8 @@ public class Startup extends JFrame implements ActionListener {
 						String[] arrayLines = file.OpenFile();
 						new scoreFrame(arrayLines, username, quizName);
 						//System.out.println(""+ arrayLines[0]);
+						frame.setVisible(false);
+						frame.dispose();
 						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block

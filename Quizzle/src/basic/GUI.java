@@ -158,6 +158,7 @@ public class GUI extends JFrame implements ActionListener {
 	}
 
 	private void CheckAnswer(String username, String quizName, int noOfQuestions) {
+		boolean end = false;
 		try {
 			String[] configstring;
 			ReadFile file = new ReadFile(
@@ -181,19 +182,30 @@ public class GUI extends JFrame implements ActionListener {
 			if (qNumber == noOfQuestions ) {
 					logScore(username,quizName,score);
 					JOptionPane.showMessageDialog(null, "You scored: " + score + " out of " + noOfQuestions );
+					end = true;
 					new QuizChoose(username);
 					frame.setVisible(false);
 					frame.dispose();
-
+					
 				
 			}
 		} else {
 			lastAnswerButton.setBackground(Color.RED);
 			lastAnswerButton.setText(" :(");
+			if (qNumber == noOfQuestions ) {
+				logScore(username,quizName,score);
+				JOptionPane.showMessageDialog(null, "You scored: " + score + " out of " + noOfQuestions );
+				end = true;
+				new QuizChoose(username);
+				frame.setVisible(false);
+				frame.dispose();
+			}
 		}
 		qNumber++;
 		setup = true;
-		Prep(quizName);
+		if (end == false){
+			Prep(quizName);	
+		}
 
 	}
 

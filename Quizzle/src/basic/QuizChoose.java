@@ -45,7 +45,7 @@ public class QuizChoose extends JFrame implements ActionListener {
 		newQuiz = new JButton("New Quiz");
 		userName = new JLabel("Welcome: " + username);
 		oldQuiz = new JButton("Existing Quiz");
-		quizMaker = new JTextField("QuizName");
+		quizMaker = new JTextField("Enter Quiz Name Here");
 		ActionListener listener = new ActionListener() {
 
 			@Override
@@ -109,26 +109,26 @@ public class QuizChoose extends JFrame implements ActionListener {
 		newQuiz.addActionListener(listener);
 		newQuiz.setFocusable(false);
 		newQuiz.setBackground(Color.GRAY);
-		newQuiz.setSize(100, 50);
+		newQuiz.setSize(200, 50);
 		newQuiz.setLocation(840, 480);
 		oldQuiz.addActionListener(listener);
 		oldQuiz.setFocusable(false);
 		oldQuiz.setBackground(Color.GRAY);
-		oldQuiz.setSize(100, 50);
+		oldQuiz.setSize(200, 50);
 		oldQuiz.setLocation(840, 530);
 
-		quizMaker.setSize (100, 50);
+		quizMaker.setSize (200, 50);
 		quizMaker.setLocation(840, 580);
 		
 		back = new JButton("Log out");
 		back.addActionListener(listener);
 		back.setFocusable(false);
 		back.setBackground(Color.GRAY);
-		back.setSize(100, 50);
+		back.setSize(200, 50);
 		back.setLocation(840, 630);
 		
 		userName.setSize (600, 50);
-		userName.setLocation(1300, 100);
+		userName.setLocation(1200, 200);
 		panel.setLayout(null);
 		panel.add(newQuiz);
 		panel.add(userName);
