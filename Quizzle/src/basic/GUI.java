@@ -20,10 +20,10 @@ public class GUI extends JFrame implements ActionListener {
 
 	GUImanager g = new GUImanager();
 
-	JPanel panel;
-	JFrame frame;
-
-	JButton greenButton;
+	JPanel panel; //Panel for the frame
+	JFrame frame; //Frame of the GUI
+	
+	JButton greenButton; // Buttons and Labels for the quiz
 	JButton redButton;
 	JButton yellowButton;
 	JButton blueButton;
@@ -31,15 +31,15 @@ public class GUI extends JFrame implements ActionListener {
 	JLabel quizQuestion;
 	JLabel Quizzle;
 	JLabel scoreTrack;
-	int height = 1920;
+	int height = 1920; //set dimenions
 	int width = 1080;
-	int qNumber = 1;
-	JLabel lastAnswer;
+	int qNumber = 1; // The intial question number
+	JLabel lastAnswer; 
 	JButton lastAnswerButton;
-	char answer;
-	char buttonPressed;
-	int score = 0;
-	boolean setup = true;
+	char answer; // the answer taken from the text file as a char
+	char buttonPressed; // the answer taken from the button press as a char
+	int score = 0; //default score
+	boolean setup = true; // boolean to make sure the GUI is setup
 
 	public GUI(final String username, final String quizName, final int noOfQs) {
 		// g.prepareGUI(frame, panel, height, width);
@@ -277,7 +277,8 @@ public class GUI extends JFrame implements ActionListener {
 				configstring = arrayLines[qNumber].split(",");
 				String qTitle = configstring[0];
 
-				g.setTextFit(quizQuestion, qTitle);
+				
+				quizQuestion.setText(qTitle);
 				quizTitle.setText(quizName);
 				redButton.setText("A: " + (configstring[1]));
 				yellowButton.setText("B: " + (configstring[2]));

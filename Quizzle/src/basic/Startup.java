@@ -106,7 +106,7 @@ public class Startup extends JFrame implements ActionListener {
 		back.setLocation(840, 580);
 		
 		userName.setSize (600, 50);
-		userName.setLocation(1300, 100);
+		userName.setLocation(1200, 200);
 		panel.setLayout(null);
 		panel.add(back);
 		panel.add(start);

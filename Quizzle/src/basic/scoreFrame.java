@@ -81,27 +81,27 @@ GUImanager g = new GUImanager();
 		back.setFocusable(false);
 		back.setBackground(Color.GRAY);
 		back.setSize(100, 50);
-		back.setLocation(400, 480);
+		back.setLocation(500, 580);
 		
 		scoresList1 = new JLabel(top1);
 		scoresList1.setSize (600, 50);
-		scoresList1.setLocation(1300, 100);
+		scoresList1.setLocation(1100, 300);
 		
 		scoresList2 = new JLabel(top2);
 		scoresList2.setSize (600, 50);
-		scoresList2.setLocation(1300, 300);
+		scoresList2.setLocation(1100, 400);
 		
 		scoresList3 = new JLabel(top3);
 		scoresList3.setSize (600, 50);
-		scoresList3.setLocation(1300, 500);
+		scoresList3.setLocation(1100, 500);
 		
 		scoresList4 = new JLabel(top4);
 		scoresList4.setSize (600, 50);
-		scoresList4.setLocation(1300, 700);
+		scoresList4.setLocation(1100, 600);
 		
 		scoresList5 = new JLabel(top5);
 		scoresList5.setSize (600, 50);
-		scoresList5.setLocation(1300, 900);
+		scoresList5.setLocation(1100, 700);
 		
 		panel.add(scoresList1);
 		panel.add(scoresList2);
