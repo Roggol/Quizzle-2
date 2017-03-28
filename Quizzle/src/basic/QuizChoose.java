@@ -24,8 +24,6 @@ import javax.swing.JTextField;
 
 public class QuizChoose extends JFrame implements ActionListener {
 
-	GUImanager g = new GUImanager();
-
 	private JFrame frame;
 	private JPanel panel;
 	JButton newQuiz;
@@ -34,18 +32,18 @@ public class QuizChoose extends JFrame implements ActionListener {
 	JButton back;
 	JTextField quizMaker;
 	String quizName;
-	int height = 1000;
-	int width = 720;
-	
+	//initialise objects and variables
+	//more comments to do
 
 	public QuizChoose(final String username) {
-
-		prepareGUI();
+		prepareGUI();//setup GUI
 
 		newQuiz = new JButton("New Quiz");
 		userName = new JLabel("Welcome: " + username);
 		oldQuiz = new JButton("Existing Quiz");
 		quizMaker = new JTextField("Enter Quiz Name Here");
+		//setup objects
+		
 		ActionListener listener = new ActionListener() {
 
 			@Override
@@ -148,13 +146,8 @@ public class QuizChoose extends JFrame implements ActionListener {
 
 	private void prepareGUI() {
 		frame = new JFrame("Quizzle");
-		frame.setSize(height, width);
-		// frame.setLayout(new GridLayout(6,3));
-
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
-		panel.setLayout(new FlowLayout());
-
 		frame.add(panel);
 		frame.setVisible(true);
 	}

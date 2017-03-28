@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class ReadFile {
+public class ReadFile {//taken from http://www.homeandlearn.co.uk/java/read_a_textfile_in_java.html
 
 	private String path;
 

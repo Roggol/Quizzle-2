@@ -2,7 +2,7 @@ package basic;
 
 import java.io.*;
 
-public class WriteFile {
+public class WriteFile {// taken from : http://www.homeandlearn.co.uk/java/write_to_textfile.html
 
 	private String path;
 

@@ -19,8 +19,6 @@ import javax.swing.JTextField;
 
 public class QuizMaker extends JFrame implements ActionListener {
 
-	GUImanager g = new GUImanager();
-
 	private JFrame frame;
 	private JPanel panel;
 	JButton next;
@@ -36,8 +34,6 @@ public class QuizMaker extends JFrame implements ActionListener {
 	String[] configstring;
 	
 	private int count = 1;
-	int height = 1000;
-	int width = 720;
 
 	public QuizMaker(final String username, final String quizName, final int Number) {
 
@@ -170,26 +166,20 @@ public class QuizMaker extends JFrame implements ActionListener {
 		back.setVisible(false);
 		
 		questionTitle.setSize (600, 50);
-		questionTitle.setLocation(1000, 100);
-		
+		questionTitle.setLocation(1000, 100);		
 		AnswerA.setSize (600, 50);
-		AnswerA.setLocation(1000, 200);
-		
+		AnswerA.setLocation(1000, 200);		
 		AnswerB.setSize (600, 50);
-		AnswerB.setLocation(1000, 300);
-		
+		AnswerB.setLocation(1000, 300);		
 		AnswerC.setSize (600, 50);
-		AnswerC.setLocation(1000, 400);
-		
+		AnswerC.setLocation(1000, 400);		
 		AnswerD.setSize (600, 50);
-		AnswerD.setLocation(1000, 500);
-		
+		AnswerD.setLocation(1000, 500);	
 		Answer.setSize (600, 50);
-		Answer.setLocation(1000, 600);
-		
-		
+		Answer.setLocation(1000, 600);	
 		userName.setSize (600, 50);
 		userName.setLocation(1700, 100);
+		
 		panel.setLayout(null);
 		panel.add(next);
 		panel.add(userName);
@@ -222,20 +212,15 @@ public class QuizMaker extends JFrame implements ActionListener {
 		AnswerC.setText("C: ");
 		AnswerD.setText("D: ");
 		Answer.setText("Correct Answer");
-		questionTitle.setText("Question " + count);
+		questionTitle.setText("Question " + count);			
 				
-				
-
 		
 	}
 	private void prepareGUI() {
 		frame = new JFrame("Quizzle");
-		frame.setSize(height, width);
-		// frame.setLayout(new GridLayout(6,3));
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
-		panel.setLayout(new FlowLayout());
 
 		frame.add(panel);
 		frame.setVisible(true);

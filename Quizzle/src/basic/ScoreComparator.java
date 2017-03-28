@@ -2,7 +2,7 @@ package basic;
 
 import java.util.Comparator;
 
-public class ScoreComparator implements Comparator<Scores> {
+public class ScoreComparator implements Comparator<Scores> {// Algorithm taken from: http://forum.codecall.net/topic/50071-making-a-simple-high-score-system/
         public int compare(Scores score1, Scores score2) {
 
             int sc1 = score1.getScore();

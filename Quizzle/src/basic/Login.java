@@ -20,50 +20,50 @@ public class Login {
 	private JFrame frame;
 	private JPanel panel;
 	JButton start;
-	int height = 1000;
-	int width = 720;
 	JTextField username;
 	JTextField password;
 	String usernameCheck;
 	String passwordCheck;
 	JButton signUp;
+	
+	//Initialise buttons, strings, integers and Labels
 
 	public Login() {
 
-		prepareGUI();
+		prepareGUI();//sets up GUI
 
 		start = new JButton("Login");
 		signUp = new JButton("Sign up");
 		username = new JTextField("UserName");
 		password = new JTextField("Password");
+		//sets up buttons and Text fields
 		ActionListener listener = new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				if (event.getSource() == start) {
+				if (event.getSource() == start) {//if the start button is pressed
 					usernameCheck = username.getText();
-					passwordCheck = password.getText();
-					boolean found = false;
+					passwordCheck = password.getText();//gets string from text fields
+					boolean found = false; //sets up boolean to check if the username is contained within the file
 					try {
 						ReadFile file = new ReadFile(
-								"login.txt");
-						String[] arrayLines = file.OpenFile();
-						int i;
-						for (i = 0; i < arrayLines.length; i++) {
-							if((i+1) != arrayLines.length){
-								if (arrayLines[i].contains(usernameCheck)
+								"login.txt");//locates file
+						String[] arrayLines = file.OpenFile();//gets array of lines from file
+						for (int i = 0; i < arrayLines.length; i++) {// for loop for number of lines in the file
+							if((i+1) != arrayLines.length){// if its not the last line of the file
+								if (arrayLines[i].contains(usernameCheck)//check if the username is found
 									&& arrayLines[i + 1]
-											.contains(passwordCheck)) {
-								 found = true;
+											.contains(passwordCheck)) {//if the password is also found in the next line
+								 found = true;//username and password matched
 								} 
 
 							}
-						}if(found == true){
-							new QuizChoose(usernameCheck);
+						}if(found == true){// if the username and password are matched
+							new QuizChoose(usernameCheck);//launch the quiz chooser window
 							frame.setVisible(false);
-							frame.dispose();
+							frame.dispose();//remove frame
 						}else{
-							JOptionPane.showMessageDialog(null, "Incorrect Username or Password");
+							JOptionPane.showMessageDialog(null, "Incorrect Username or Password");// Tell them that the username and password do not match
 						}
 							
 						
@@ -76,13 +76,13 @@ public class Login {
 				}
 				if (event.getSource() == signUp){
 					usernameCheck = username.getText();
-					passwordCheck = password.getText();
+					passwordCheck = password.getText();//get Text from box
 					try {
 						WriteFile file = new WriteFile(
-								"login.txt", true);
+								"login.txt", true);// find file
 						
-						file.writeToFile(usernameCheck);
-						file.writeToFile(passwordCheck);
+						file.writeToFile(usernameCheck);//write username
+						file.writeToFile(passwordCheck);//write password
 						
 					}catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -92,6 +92,8 @@ public class Login {
 			}
 
 		};
+		
+		//objects setup
 		start.addActionListener(listener);
 		start.setFocusable(false);
 		start.setBackground(Color.GRAY);
@@ -116,17 +118,13 @@ public class Login {
 		frame.add(panel);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
+
 	}
 
-	private void prepareGUI() {
+	private void prepareGUI() {//sets up GUI
 		frame = new JFrame("Quizzle");
-		frame.setSize(height, width);
-		// frame.setLayout(new GridLayout(6,3));
-//
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
-		panel.setLayout(new FlowLayout());
-
 		frame.add(panel);
 		frame.setVisible(true);
 	}

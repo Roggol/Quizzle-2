@@ -31,21 +31,19 @@ public class GUI extends JFrame implements ActionListener {
 	JLabel quizQuestion;
 	JLabel Quizzle;
 	JLabel scoreTrack;
-	int height = 1920; //set dimenions
-	int width = 1080;
 	int qNumber = 1; // The intial question number
 	JLabel lastAnswer; 
 	JButton lastAnswerButton;
 	char answer; // the answer taken from the text file as a char
 	char buttonPressed; // the answer taken from the button press as a char
 	int score = 0; //default score
-	boolean setup = true; // boolean to make sure the GUI is setup
+
 
 	public GUI(final String username, final String quizName, final int noOfQs) {
-		// g.prepareGUI(frame, panel, height, width);
-		// prepareGUI(frame, panel, height, width);
-		prepareGUI();
-
+		
+		prepareGUI(); //sets up GUI
+		
+		//intitialise buttons and Labels
 		redButton = new JButton("");
 		yellowButton = new JButton("");
 		greenButton = new JButton("");
@@ -60,6 +58,7 @@ public class GUI extends JFrame implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
+				//checks which button was pressed
 				if (event.getSource() == redButton) {
 					buttonPressed = 'A';
 				}
@@ -72,12 +71,14 @@ public class GUI extends JFrame implements ActionListener {
 				if (event.getSource() == blueButton) {
 					buttonPressed = 'D';
 				}
-				CheckAnswer(username, quizName, noOfQs);
+				CheckAnswer(username, quizName, noOfQs); //Runs check answer
+				
 
 			}
 
 		};
-
+		
+		//button and Label setup
 		redButton.addActionListener(listener);
 		greenButton.addActionListener(listener);
 		yellowButton.addActionListener(listener);
@@ -115,15 +116,16 @@ public class GUI extends JFrame implements ActionListener {
 		lastAnswer.setLocation(1700, 500);
 		lastAnswerButton.setLocation(1700, 620);
 
-		panel.setLayout(null);
+		panel.setLayout(null);//sets layout to null
 
-		g.Font(quizTitle, java.awt.Font.PLAIN);
-		g.Font(quizQuestion, java.awt.Font.PLAIN);
-
-		panel.add(redButton, BorderLayout.PAGE_START);
-		panel.add(yellowButton, BorderLayout.PAGE_START);
-		panel.add(blueButton, BorderLayout.PAGE_START);
-		panel.add(greenButton, BorderLayout.PAGE_START);
+		g.Font(quizTitle, java.awt.Font.PLAIN); // maximises the text size
+		g.Font(quizQuestion, java.awt.Font.PLAIN); // maximises the text size
+		
+		//add buttons and labels
+		panel.add(redButton);
+		panel.add(yellowButton);
+		panel.add(blueButton);
+		panel.add(greenButton);
 		panel.add(quizTitle);
 		panel.add(quizQuestion);
 		panel.add(scoreTrack);
@@ -134,130 +136,116 @@ public class GUI extends JFrame implements ActionListener {
 		try {
 			myPicture = ImageIO
 					.read(new File(
-							"U:/Year 13/Computer Science/Coursework/workspace/Quizzle Logo.png"));
+							"Quizzle Logo.png")); //locates image
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+		JLabel picLabel = new JLabel(new ImageIcon(myPicture)); //creates Label for image
 		picLabel.setLocation(700, 10);
 		picLabel.setSize(500, 200);
-		panel.add(picLabel);
+		panel.add(picLabel); //adds image
 
-		// frame.setLayout(layout);//
 
-		frame.add(panel);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.add(panel);//adds panel to frame
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximises frame size
 
 		frame.setVisible(true);
 
-		Prep(quizName);
+		Prep(quizName);//Fills in buttons and Labels based on Question Number
 
-		// }
 	}
 
 	private void CheckAnswer(String username, String quizName, int noOfQuestions) {
-		boolean end = false;
+		boolean end = false;//boolean to check if the quiz has ended
 		try {
-			String[] configstring;
+			String[] configString; //initialises array to be used
 			ReadFile file = new ReadFile(
-					quizName + "\\questions.txt");
-			String[] arrayLines = file.OpenFile();
-			configstring = arrayLines[qNumber].split(",");
-			String AnswerString = configstring[5];
-			answer = AnswerString.charAt(0);
+					quizName + "\\questions.txt");//attempts to read file in the directory of the quiz name with the file called questions
+			String[] arrayLines = file.OpenFile();//Grabs the data from file and puts it into the array
+			configString = arrayLines[qNumber].split(",");//splits the string at the position of the question number from the file into parts separated by a comma
+			String AnswerString = configString[5];//Grabs the string at the 5th position in the new array
+			answer = AnswerString.charAt(0); //turns the string into a char to be compared
 			
 		} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 		}
 		
-		if (buttonPressed == answer) {
-			score++;
-			scoreTrack.setText("Score: " + score);
+		if (buttonPressed == answer) {//checks if the char from button pressed and from the file match
+			score++;//if they do increment score
+			scoreTrack.setText("Score: " + score);//update the score Label
 			lastAnswerButton.setBackground(Color.GREEN);
-			lastAnswerButton.setText(" :)");
+			lastAnswerButton.setText(" :)");//update the Button to show whether they got the previous answer right
 
-			if (qNumber == noOfQuestions ) {
-					logScore(username,quizName,score);
-					JOptionPane.showMessageDialog(null, "You scored: " + score + " out of " + noOfQuestions );
-					end = true;
-					new QuizChoose(username);
+			if (qNumber == noOfQuestions ) {//checks to see if the quiz has ended
+					logScore(username,quizName,score);//logs the score if the quiz is over
+					JOptionPane.showMessageDialog(null, "You scored: " + score + " out of " + noOfQuestions );//tells them their score
+					end = true;//quiz has ended
+					new QuizChoose(username);//goes back to the frame where you choose the quiz
 					frame.setVisible(false);
-					frame.dispose();
+					frame.dispose();//removes frame
 					
 				
 			}
 		} else {
 			lastAnswerButton.setBackground(Color.RED);
 			lastAnswerButton.setText(" :(");
-			if (qNumber == noOfQuestions ) {
-				logScore(username,quizName,score);
-				JOptionPane.showMessageDialog(null, "You scored: " + score + " out of " + noOfQuestions );
-				end = true;
-				new QuizChoose(username);
+			if (qNumber == noOfQuestions ) {//checks to see if the quiz has ended
+				logScore(username,quizName,score);//logs the score if the quiz is over
+				JOptionPane.showMessageDialog(null, "You scored: " + score + " out of " + noOfQuestions );//tells them their score
+				end = true;//quiz has ended
+				new QuizChoose(username);//goes back to the frame where you choose the quiz
 				frame.setVisible(false);
-				frame.dispose();
+				frame.dispose();//removes frame
 			}
 		}
-		qNumber++;
-		setup = true;
+		qNumber++;//increments question number
 		if (end == false){
-			Prep(quizName);	
+			Prep(quizName);	//Sets up boxes again if the quiz has not ended
 		}
 
 	}
 
-	private void logScore(String username, String quizName,int score) {
-		boolean found = false;
-		int highScoreFromFile = 0;
+	private void logScore(String username, String quizName,int score) { //takes inputs of username, quizname and score
+		boolean found = false;//boolean to check if the username has been found to make sure the same user does not have multiple scores
+		int highScoreFromFile = 0;//int to check if the username is found if their new highscore exceeds their old one
 		try {
 			ReadFile file = new ReadFile(
-					quizName + "\\scores.txt");
-			String[] arrayLines = file.OpenFile();
+					quizName + "\\scores.txt");//reads file
+			String[] arrayLines = file.OpenFile();//array of lines from file
 
-			String Highscore = "";
-			String[] configstring = new String[2];
+			String Highscore = "";//Initialises highscore string
+			String[] configstring = new String[2];// new string array of length 2
 
-			int i;
-			WriteFile writer = new WriteFile(quizName + "\\scores.txt",false);
-			WriteFile writer1 = new WriteFile(quizName + "\\scores.txt",true);
-			writer.writeToFile("Username,Password");
-			for (i = 0; i < arrayLines.length; i++) {
-				if (arrayLines[i].contains(username)) {
-					found = true;
-					configstring = arrayLines[i].split(",");
 
-					Highscore = configstring[1];
-					highScoreFromFile = Integer.valueOf(Highscore);
-					if (highScoreFromFile > score) {
-						writer1.writeToFile(arrayLines[i]);
+			WriteFile writer = new WriteFile(quizName + "\\scores.txt",false);//writer that deletes all previous things inside file
+			WriteFile writer1 = new WriteFile(quizName + "\\scores.txt",true);//writer that appends the file
+			writer.writeToFile("Username,Password");//set file title for comma separated format
+			for (int i = 0; i < arrayLines.length; i++) {// for loop for amount of items in array
+				if (arrayLines[i].contains(username)) {//checks to see if the username is inside the array
+					found = true;//sername found
+					configstring = arrayLines[i].split(",");//splits username and score
 
-					} else {
-						found = false;
+					Highscore = configstring[1];//finds score
+					highScoreFromFile = Integer.valueOf(Highscore);//turns the score string into int
+					if (highScoreFromFile >= score) {
+						writer1.writeToFile(arrayLines[i]);//if the score from the file is greater than or equal the current score, just re-write the array line
+
+					} else {					
+						writer1.writeToFile(username + "," + score); //current score is greater therefore the old highscore is no longer a high score
 					}
 				} else if (i == 0) {
-					// do nothing
+					// do nothing because this is the title line
 				} else {
 					writer1.writeToFile(arrayLines[i]);
+					//if username is not found just write the array line
 				}
 
 			}
-			try {
-				if (highScoreFromFile >= score) {
-					found = true;
 
-				}
-
-				if (found == false) {
-					writer1.writeToFile(username + "," + score);
-				}
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -267,41 +255,34 @@ public class GUI extends JFrame implements ActionListener {
 	}
 
 	private void Prep(String quizName) {
-		if (setup == true) {
 			
 			try {
 				String[] configstring;
 				ReadFile file = new ReadFile(
-						quizName + "\\questions.txt");
-				String[] arrayLines = file.OpenFile();
-				configstring = arrayLines[qNumber].split(",");
-				String qTitle = configstring[0];
-
+						quizName + "\\questions.txt");//finds file
+				String[] arrayLines = file.OpenFile();//reads lines from file
+				configstring = arrayLines[qNumber].split(",");//splits lines by comma
 				
+				String qTitle = configstring[0];			
 				quizQuestion.setText(qTitle);
 				quizTitle.setText(quizName);
 				redButton.setText("A: " + (configstring[1]));
 				yellowButton.setText("B: " + (configstring[2]));
 				greenButton.setText("C: " + (configstring[3]));
 				blueButton.setText("D: " + (configstring[4]));
+				//sets up Labels and buttons based on data from file
 			} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			}
-			frame.repaint();
-			setup = false;
-			
-		}
+			frame.repaint();// refreshes frame
+
 	}
 
-	private void prepareGUI() {
+	private void prepareGUI() {//sets up GUI
 		frame = new JFrame("Quizzle");
-		frame.setSize(height, width);
-		// frame.setLayout(new GridLayout(6,3));
-
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
-
 		frame.add(panel);
 		frame.setVisible(true);
 	}

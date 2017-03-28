@@ -1,6 +1,6 @@
 package basic;
 
-public class Scores {
+public class Scores {//taken from http://forum.codecall.net/topic/50071-making-a-simple-high-score-system/
     private int score;
     private String user;
 

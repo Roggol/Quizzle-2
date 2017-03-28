@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class GUImanager {
+public class GUImanager {//This function is taken from: http://stackoverflow.com/questions/2715118/how-to-change-the-size-of-the-font-of-a-jlabel-to-take-the-maximum-size
 	
 	public void Font(JLabel label, int font){		
 		java.awt.Font labelFont = label.getFont();

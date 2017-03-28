@@ -1,12 +1,10 @@
 package basic;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Hashtable;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,12 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class scoreFrame extends JFrame implements ActionListener{
-GUImanager g = new GUImanager();
-	
+
 	JPanel panel;
 	JFrame frame;
-	int height = 1000;
-	int width = 720;
 	JLabel scoresList1;
 	JLabel scoresList2;
 	JLabel scoresList3;
@@ -33,36 +28,33 @@ GUImanager g = new GUImanager();
 	String top3;
 	String top4;
 	String top5;
-	String[] configstring;
+	String[] configString;
 	private ArrayList<Scores> scores;
 
 
 	
 	public scoreFrame(String[] arrayLines, final String username, final String quizName){
 		prepareGUI();
-		int i;
         scores = new ArrayList<Scores>();
-		for (i = 1; i < arrayLines.length; i++) {
-			configstring = arrayLines[i].split(",");	
-			Highscore = configstring[1];
+		for (int i = 1; i < arrayLines.length; i++) {
+			configString = arrayLines[i].split(",");	
+			Highscore = configString[1];
 			highScoreFromFile = Integer.valueOf(Highscore);
-
-			addScore(configstring[0], highScoreFromFile);
+			scores.add(new Scores(configString[0], highScoreFromFile));
 			
 		}
-			addScore("---", 0);
-			addScore("---", 0);
-			addScore("---", 0);
-			addScore("---", 0);
-			addScore("---", 0);
-			sort();
+			for(int j = 0; j < 5; j++){//adds 5 empty scores to scores
+			scores.add(new Scores("---",0));
+			}
+			ScoreComparator comparator = new ScoreComparator();
+	        Collections.sort(scores, comparator);
 			
 			top1 = "1. " + scores.get(0).getUser() + " " + scores.get(0).getScore();
 			top2 = "2. " + scores.get(1).getUser() + " " + scores.get(1).getScore();
 			top3 = "3. " + scores.get(2).getUser() + " " + scores.get(2).getScore();
 			top4 = "4. " + scores.get(3).getUser() + " " + scores.get(3).getScore();
 			top5 = "5. " + scores.get(4).getUser() + " " + scores.get(4).getScore();
-		//
+	
 			ActionListener listener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent event) {
@@ -115,23 +107,13 @@ GUImanager g = new GUImanager();
 	}
 	private void prepareGUI() {
 		frame = new JFrame("Quizzle");
-		frame.setSize(height, width);
-
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
 		panel.setLayout(null);
-
 		frame.add(panel);
 		frame.setVisible(true);
 }
-	private void sort() {
-        ScoreComparator comparator = new ScoreComparator();
-        Collections.sort(scores, comparator);
-        
-}
-	public void addScore(String name, int score) {
-        scores.add(new Scores(name, score));
-}
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub

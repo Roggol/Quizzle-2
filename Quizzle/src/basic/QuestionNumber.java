@@ -19,8 +19,6 @@ import javax.swing.JTextField;
 
 public class QuestionNumber extends JFrame implements ActionListener {
 
-	GUImanager g = new GUImanager();
-
 	private JFrame frame;
 	private JPanel panel;
 	JButton next;
@@ -30,9 +28,7 @@ public class QuestionNumber extends JFrame implements ActionListener {
 	JButton back;
 	String questionNo;
 	int questionNoInt = 0;
-	private int count = 0;
-	int height = 1000;
-	int width = 720;
+	//initialise variables and objects
 
 	public QuestionNumber(final String username, final String quizName) {
 
@@ -40,37 +36,35 @@ public class QuestionNumber extends JFrame implements ActionListener {
 
 		next = new JButton("Enter");
 		userName = new JLabel("Welcome: " + username);
-		questionNumber = new JTextField("Number of Questions(1-20)");
+		questionNumber = new JTextField("Number of Questions(2-20)");
+		//sets up objects
 		ActionListener listener = new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				if (event.getSource() == next) {
-					questionNo = questionNumber.getText();
+				if (event.getSource() == next) {// if next button is pressed
+					questionNo = questionNumber.getText();// get string from box
 					try{
-						questionNoInt = Integer.parseInt(questionNo);
+						questionNoInt = Integer.parseInt(questionNo);//turn int into string
 						if(questionNoInt < 2){
-							questionNoInt = 2;
+							questionNoInt = 2;//sets mininum number of questions as 2
 							JOptionPane.showMessageDialog(null, "Integer too low. 2 Selected");
 						}else if(questionNoInt>20){
-							questionNoInt=20;
+							questionNoInt=20;//sets maximum number of questions as 20
 							JOptionPane.showMessageDialog(null, "Integer too high. 20 selected");
-						}else if(questionNoInt>0 && questionNoInt <21){
+						}else{//if number of questions is accepted, returns the number they input
 							JOptionPane.showMessageDialog(null, questionNoInt + " question(s) selected");
-						}else{
-							questionNoInt = 10;
-							JOptionPane.showMessageDialog(null, "Not an integer, default selected (10)");
 						}
-						new QuizMaker(username,quizName,questionNoInt);
+						new QuizMaker(username,quizName,questionNoInt);//launches quizmaker
 						try {
 							WriteFile writer = new WriteFile(quizName + "\\questionNumber.txt",true);
-							writer.writeToFile("" + questionNoInt);
+							writer.writeToFile("" + questionNoInt);//writes the question number to file
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						frame.setVisible(false);
-						frame.dispose();
+						frame.dispose();//remove frame
 					}catch (java.lang.NumberFormatException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -83,6 +77,8 @@ public class QuestionNumber extends JFrame implements ActionListener {
 			}
 
 		};
+		
+		//object setup
 		next.addActionListener(listener);
 		next.setFocusable(false);
 		next.setBackground(Color.GRAY);
@@ -111,13 +107,8 @@ public class QuestionNumber extends JFrame implements ActionListener {
 
 	private void prepareGUI() {
 		frame = new JFrame("Quizzle");
-		frame.setSize(height, width);
-		// frame.setLayout(new GridLayout(6,3));
-
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
-		panel.setLayout(new FlowLayout());
-
 		frame.add(panel);
 		frame.setVisible(true);
 	}
