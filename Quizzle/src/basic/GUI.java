@@ -132,20 +132,18 @@ public class GUI extends JFrame implements ActionListener {
 		panel.add(lastAnswer);
 		panel.add(lastAnswerButton);
 
-		BufferedImage myPicture = null;
+		/*BufferedImage pic = null;
 		try {
-			myPicture = ImageIO
-					.read(new File(
-							"Quizzle Logo.png")); //locates image
+			pic = ImageIO.read(new File("Quizzle Logo.png")); //locates image
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		JLabel picLabel = new JLabel(new ImageIcon(myPicture)); //creates Label for image
+		JLabel picLabel = new JLabel(new ImageIcon(pic)); //creates Label for image
 		picLabel.setLocation(700, 10);
 		picLabel.setSize(500, 200);
-		panel.add(picLabel); //adds image
+		panel.add(picLabel); //adds image*/
 
 
 		frame.add(panel);//adds panel to frame
@@ -161,8 +159,7 @@ public class GUI extends JFrame implements ActionListener {
 		boolean end = false;//boolean to check if the quiz has ended
 		try {
 			String[] configString; //initialises array to be used
-			ReadFile file = new ReadFile(
-					quizName + "\\questions.txt");//attempts to read file in the directory of the quiz name with the file called questions
+			ReadFile file = new ReadFile(quizName + "\\questions.txt");//attempts to read file in the directory of the quiz name with the file called questions
 			String[] arrayLines = file.OpenFile();//Grabs the data from file and puts it into the array
 			configString = arrayLines[qNumber].split(",");//splits the string at the position of the question number from the file into parts separated by a comma
 			String AnswerString = configString[5];//Grabs the string at the 5th position in the new array

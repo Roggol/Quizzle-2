@@ -1,15 +1,12 @@
 package basic;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -41,29 +38,37 @@ public class Login {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				if (event.getSource() == start) {//if the start button is pressed
+				if (event.getSource() == start) {
+					//if the start button is pressed
 					usernameCheck = username.getText();
-					passwordCheck = password.getText();//gets string from text fields
-					boolean found = false; //sets up boolean to check if the username is contained within the file
+					passwordCheck = password.getText();
+					//gets string from text fields
+					boolean found = false; 
+					//sets up boolean to check if the username is contained within the file
 					try {
 						ReadFile file = new ReadFile(
-								"login.txt");//locates file
-						String[] arrayLines = file.OpenFile();//gets array of lines from file
-						for (int i = 0; i < arrayLines.length; i++) {// for loop for number of lines in the file
-							if((i+1) != arrayLines.length){// if its not the last line of the file
-								if (arrayLines[i].contains(usernameCheck)//check if the username is found
-									&& arrayLines[i + 1]
-											.contains(passwordCheck)) {//if the password is also found in the next line
-								 found = true;//username and password matched
-								} 
-
+								"login.txt");//reads file
+						String[] arrayLines = file.OpenFile();
+						//array of lines from file
+						String[] configString = new String[2];
+						// new string array of length 2
+				
+						for (int i = 0; i < arrayLines.length; i++) {
+							// for loop for amount of items in array
+							configString = arrayLines[i].split(",");
+							if (configString[0].contains(usernameCheck)&&configString[1].contains(passwordCheck)) {
+								//checks to see if the username and password match
+								found = true;//username found	
 							}
-						}if(found == true){// if the username and password are matched
-							new QuizChoose(usernameCheck);//launch the quiz chooser window
-							frame.setVisible(false);
-							frame.dispose();//remove frame
+						}if(found == false){
+							JOptionPane.showMessageDialog(null, "Username or password does not match" );
 						}else{
-							JOptionPane.showMessageDialog(null, "Incorrect Username or Password");// Tell them that the username and password do not match
+							// if the username and password are matched
+							new QuizChoose(usernameCheck);
+							//launch the quiz chooser window
+							frame.setVisible(false);
+							frame.dispose();
+							//remove frame
 						}
 							
 						
@@ -75,22 +80,50 @@ public class Login {
 
 				}
 				if (event.getSource() == signUp){
+					boolean found = false;
 					usernameCheck = username.getText();
-					passwordCheck = password.getText();//get Text from box
+					passwordCheck = password.getText();
+					//get Text from box
 					try {
-						WriteFile file = new WriteFile(
-								"login.txt", true);// find file
-						
-						file.writeToFile(usernameCheck);//write username
-						file.writeToFile(passwordCheck);//write password
-						
+						ReadFile file = new ReadFile(
+								"login.txt");
+						//reads file
+						String[] arrayLines = file.OpenFile();
+						//array of lines from file
+						String[] configString = new String[2];
+						// new string array of length 2
+
+						WriteFile writer = new WriteFile("login.txt",false);
+						//writer that deletes all previous things inside file
+						WriteFile writer1 = new WriteFile("login.txt",true);
+						//writer that appends the file
+						writer.writeToFile("Username,Password");
+						//set file title for comma separated format
+					
+						for (int i = 0; i < arrayLines.length; i++) {
+							// for loop for amount of items in array
+							configString = arrayLines[i].split(",");
+							if (configString[0].contains(usernameCheck)) {
+								//checks to see if the username is inside the array
+								found = true;
+								//username found
+							
+							}
+							writer1.writeToFile(arrayLines[i]);
+						}if(found == false){
+							writer1.writeToFile(usernameCheck + "," + passwordCheck);
+							//adds username and password to file							
+						}else{
+							JOptionPane.showMessageDialog(null, "Username taken" );
+							//tells them that the username already exists
+						}
 					}catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				
 				}
 			}
-
 		};
 		
 		//objects setup
@@ -121,7 +154,8 @@ public class Login {
 
 	}
 
-	private void prepareGUI() {//sets up GUI
+	private void prepareGUI() {
+		//sets up GUI
 		frame = new JFrame("Quizzle");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
