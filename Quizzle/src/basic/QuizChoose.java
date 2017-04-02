@@ -1,18 +1,12 @@
 package basic;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javax.swing.JButton;
@@ -32,8 +26,7 @@ public class QuizChoose extends JFrame implements ActionListener {
 	JButton back;
 	JTextField quizMaker;
 	String quizName;
-	//initialise objects and variables
-	//more comments to do
+	//initialise objects
 
 	public QuizChoose(final String username) {
 		prepareGUI();//setup GUI
@@ -51,43 +44,49 @@ public class QuizChoose extends JFrame implements ActionListener {
 				if (event.getSource() == newQuiz) {
 					//create quiz
 					quizName = quizMaker.getText();
-					File dir = new File(quizName);
-					dir.mkdir();
+					File directory = new File(quizName);
+					directory.mkdir();
+					//Create new directory of quiz name
 					try{
 						File file = new File (quizName + "//scores.txt");
 						PrintWriter printWriter = new PrintWriter (file);
 						printWriter.close ();
+						//creates scores file in new directory
 					}catch(IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					try{
 						File file = new File (quizName + "//questionNumber.txt");
 						PrintWriter printWriter = new PrintWriter (file);
 						printWriter.close ();
+						//creates question number file in new directory
 					}catch(IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					try{
 						File file = new File (quizName + "//questions.txt");
 						PrintWriter printWriter = new PrintWriter (file);
 						printWriter.close ();
+						//creates questions fule in new directory
 					}catch(IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					new QuestionNumber(username, quizName);
+					//launches question number screen
 					frame.setVisible(false);
 					frame.dispose();
+					//deletes frame
 				}
 				if(event.getSource() == oldQuiz){
 					// use existing quiz
 					quizName = quizMaker.getText();
 					if (Files.isDirectory(Paths.get(quizName))) {
+						//checks to see if directory exists
 						new Startup(username, quizName);
+						//launches main menu
 						frame.setVisible(false);
 						frame.dispose();
+						//deletes frame
 						
 					}else{
 						JOptionPane.showMessageDialog(null, "Invalid Quiz");
@@ -96,6 +95,7 @@ public class QuizChoose extends JFrame implements ActionListener {
 				}
 				if(event.getSource() == back){
 					new Login();
+					//returns to login screen
 					frame.setVisible(false);
 					frame.dispose();
 					
@@ -140,7 +140,6 @@ public class QuizChoose extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 

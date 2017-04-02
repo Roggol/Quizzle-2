@@ -21,53 +21,48 @@ public class scoreFrame extends JFrame implements ActionListener{
 	JLabel scoresList4;
 	JLabel scoresList5;
 	JButton back;
-	String Highscore;
-	int highScoreFromFile;
-	String top1;
-	String top2;
-	String top3;
-	String top4;
-	String top5;
-	String[] configString;
-	private ArrayList<Scores> scores;
-
-
 	
 	public scoreFrame(String[] arrayLines, final String username, final String quizName){
 		prepareGUI();
-        scores = new ArrayList<Scores>();
+		ArrayList<Scores> scores = new ArrayList<Scores>();
+		//creates new array of type scores
 		for (int i = 1; i < arrayLines.length; i++) {
-			configString = arrayLines[i].split(",");	
-			Highscore = configString[1];
-			highScoreFromFile = Integer.valueOf(Highscore);
+			//for all entries in file
+			String[] configString = arrayLines[i].split(",");	
+			String Highscore = configString[1];
+			int highScoreFromFile = Integer.valueOf(Highscore);
+			//turns string from file into int
 			scores.add(new Scores(configString[0], highScoreFromFile));
+			//adds score to the array
 			
 		}
-			for(int j = 0; j < 5; j++){//adds 5 empty scores to scores
+			for(int j = 0; j < 5; j++){//adds 5 empty scores to scores to fill array
 			scores.add(new Scores("---",0));
 			}
 			ScoreComparator comparator = new ScoreComparator();
 	        Collections.sort(scores, comparator);
+	        //sorts the array using a bubble sort
 			
-			top1 = "1. " + scores.get(0).getUser() + " " + scores.get(0).getScore();
-			top2 = "2. " + scores.get(1).getUser() + " " + scores.get(1).getScore();
-			top3 = "3. " + scores.get(2).getUser() + " " + scores.get(2).getScore();
-			top4 = "4. " + scores.get(3).getUser() + " " + scores.get(3).getScore();
-			top5 = "5. " + scores.get(4).getUser() + " " + scores.get(4).getScore();
-	
+			String top1 = "1. " + scores.get(0).getUser() + " " + scores.get(0).getScore();
+			String top2 = "2. " + scores.get(1).getUser() + " " + scores.get(1).getScore();
+			String top3 = "3. " + scores.get(2).getUser() + " " + scores.get(2).getScore();
+			String top4 = "4. " + scores.get(3).getUser() + " " + scores.get(3).getScore();
+			String top5 = "5. " + scores.get(4).getUser() + " " + scores.get(4).getScore();
+			//sets the strings for the top 5 scores
+			
 			ActionListener listener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent event) {
 					if(event.getSource() == back){
 						new Startup(username, quizName);
+						//back to main menu
 						frame.setVisible(false);
 						frame.dispose();
-						
+						//delete frame
 					}
 					
 				}
 			};
-
 		back = new JButton("<-- back");
 		back.addActionListener(listener);
 		back.setFocusable(false);
@@ -112,13 +107,9 @@ public class scoreFrame extends JFrame implements ActionListener{
 		panel.setLayout(null);
 		frame.add(panel);
 		frame.setVisible(true);
-}
-	
+}	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
-
 	
 }

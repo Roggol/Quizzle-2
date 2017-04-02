@@ -1,16 +1,11 @@
 package basic;
 
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,15 +26,15 @@ public class QuizMaker extends JFrame implements ActionListener {
 	JTextField AnswerC;
 	JTextField AnswerD;
 	JTextField Answer;
-	String[] configstring;
 	
-	private int count = 1;
+	private int questionNumber = 1;
 
-	public QuizMaker(final String username, final String quizName, final int Number) {
+	public QuizMaker(final String username, final String quizName, final int numberOfQuestions) {
 
 		prepareGUI();
 
-		next = new JButton("Next -->");
+		next = new JButton("Save -->");
+		//Labelled save with an arrow to make it more clear that's what the button does
 		userName = new JLabel("Welcome: " + username);
 		back = new JButton("<-- back");
 		questionTitle = new JTextField("Question 1");
@@ -49,6 +44,29 @@ public class QuizMaker extends JFrame implements ActionListener {
 		AnswerD = new JTextField ("D: ");
 		Answer = new JTextField ("Correct Answer (A,B,C or D)");
 		
+		try {
+			ReadFile file = new ReadFile(
+					quizName + "\\questions.txt");
+			String[] arrayLines = file.OpenFile();
+			if (!(questionNumber >= arrayLines.length)){
+				//if the question already exists in the file, print what is saved for that question
+				String[] configstring = arrayLines[questionNumber].split(",");
+				//splits line by commas
+				String qTitle = configstring[0];
+				questionTitle.setText(qTitle);
+				AnswerA.setText(configstring[1]);
+				AnswerB.setText(configstring[2]);
+				AnswerC.setText(configstring[3]);
+				AnswerD.setText(configstring[4]);
+				Answer.setText(configstring[5]);
+				//sets the text to contain the relevant text from the file
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+
+		}
+		
 		ActionListener listener = new ActionListener() {
 
 			@Override
@@ -57,10 +75,11 @@ public class QuizMaker extends JFrame implements ActionListener {
 					if(!(Answer.getText().equals("A")||Answer.getText().equals("B")||Answer.getText().equals("C")||Answer.getText().equals("D"))){
 						JOptionPane.showMessageDialog(null, "Not a valid Answer");
 					}else{
-						count++;
+						questionNumber++;
 					
-						if (count > Number){
-							new GUI(username, quizName, Number);
+						if (questionNumber > numberOfQuestions){
+							new GUI(username, quizName, numberOfQuestions);
+							//launch Quiz
 							frame.setVisible(false);
 							frame.dispose();
 						}
@@ -68,24 +87,23 @@ public class QuizMaker extends JFrame implements ActionListener {
 							ReadFile file = new ReadFile(
 								quizName + "\\questions.txt");
 							String[] arrayLines = file.OpenFile();
-							/*for (int j = 1; j < arrayLines.length; j++) {
-							configstring = arrayLines[j].split(",");	
-							
-							}*/
 							try{
 								WriteFile writer = new WriteFile(quizName + "\\questions.txt",false);
 								WriteFile writer1 = new WriteFile(quizName + "\\questions.txt",true);
 								writer.writeToFile("questionTitle, AnswerA, AnswerB, AnswerC, AnswerD");
 								int length = arrayLines.length + 2;
+								// +1 for headings and +1 so the most recent question is included
 							
 								for (int i = 0; i < length; i++) {
 									if (i == 0) {
-										//do nothing
+										//do nothing because this is the headings line
 									}
-									else if(i == count-1){
+									else if(i == questionNumber-1){
 										writer1.writeToFile(questionTitle.getText() + "," + AnswerA.getText() + "," + AnswerB.getText() + "," + AnswerC.getText() + "," + AnswerD.getText() + "," + Answer.getText());
+										//write current boxes to file
 									}else if(i < arrayLines.length){
 										writer1.writeToFile(arrayLines[i]);
+										//write whatever is in that line of the file back to the file
 									}
 
 								}
@@ -104,8 +122,10 @@ public class QuizMaker extends JFrame implements ActionListener {
 							ReadFile file = new ReadFile(
 									quizName + "\\questions.txt");
 							String[] arrayLines = file.OpenFile();
-							if (!(count >= arrayLines.length)){
-								configstring = arrayLines[count].split(",");
+							if (!(questionNumber >= arrayLines.length)){
+								//if the question already exists in the file, print what is saved for that question
+								String[] configstring = arrayLines[questionNumber].split(",");
+								//splits line by commas
 								String qTitle = configstring[0];
 								questionTitle.setText(qTitle);
 								AnswerA.setText(configstring[1]);
@@ -113,8 +133,10 @@ public class QuizMaker extends JFrame implements ActionListener {
 								AnswerC.setText(configstring[3]);
 								AnswerD.setText(configstring[4]);
 								Answer.setText(configstring[5]);
+								//sets the text to contain the relevant text from the file
 							}else{
-								refresh(count);
+								refresh(questionNumber, numberOfQuestions);
+								//if the question does not exist in the file, input default values
 							}
 
 						} catch (IOException e) {
@@ -125,15 +147,17 @@ public class QuizMaker extends JFrame implements ActionListener {
 					}
 				}
 				if(event.getSource() == back){
-					count --;
-					if(count == 1){
+					questionNumber --;
+					if(questionNumber == 1){
 						back.setVisible(false);
+						//to make it so you can't reach negative question numbers
 					}
 					try {
 						ReadFile file = new ReadFile(
 								quizName + "\\questions.txt");
 						String[] arrayLines = file.OpenFile();
-						configstring = arrayLines[count].split(",");
+						String[] configstring = arrayLines[questionNumber].split(",");
+						//read file and input the text from the file relevant to each box
 						String qTitle = configstring[0];
 						questionTitle.setText(qTitle);
 						AnswerA.setText(configstring[1]);
@@ -201,28 +225,29 @@ public class QuizMaker extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 
 	}
-	public void refresh(int count){
-		if(count > 1){
+	public void refresh(int questionNumber, int numberOfQuestions){
+		if(questionNumber > 1){
 			back.setVisible(true);
 		}
-		next.setText("Next -->");
+		next.setText("save -->");
+		if(questionNumber == numberOfQuestions){
+			next.setText("finish!");
+		}
 		back.setText("<-- back");
 		AnswerA.setText("A: ");
 		AnswerB.setText("B: ");
 		AnswerC.setText("C: ");
 		AnswerD.setText("D: ");
 		Answer.setText("Correct Answer");
-		questionTitle.setText("Question " + count);			
+		questionTitle.setText("Question " + questionNumber);			
 				
 		
 	}
 	private void prepareGUI() {
+		//prepares GUI
 		frame = new JFrame("Quizzle");
-
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
-
-		frame.add(panel);
 		frame.setVisible(true);
 	}
 

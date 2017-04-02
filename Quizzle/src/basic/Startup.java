@@ -1,20 +1,13 @@
 package basic;
 
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
-
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class Startup extends JFrame implements ActionListener {
 
@@ -27,11 +20,7 @@ public class Startup extends JFrame implements ActionListener {
 	JLabel quizName;
 	JButton scores;
 	JButton back;
-	String questionNumber;
-	int questionNum = 1;
-	int height = 1000;
-	int width = 720;
-
+	JButton edit;
 	public Startup(final String username, final String quizName) {
 
 		prepareGUI();
@@ -39,49 +28,72 @@ public class Startup extends JFrame implements ActionListener {
 		start = new JButton("START");
 		userName = new JLabel("Welcome: " + username);
 		scores = new JButton("Scores");
+		edit = new JButton("Edit Quiz");
 		ActionListener listener = new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				if (event.getSource() == start) {
+					//Start button pressed
+					int questionNum = 2;
 					try {
 						ReadFile file = new ReadFile(
 								quizName + "\\questionNumber.txt");
 						String[] arrayLines = file.OpenFile();
-						questionNumber = arrayLines[0];
+						String questionNumber = arrayLines[0];
 						questionNum = Integer.parseInt(questionNumber);
-						//System.out.println(""+ arrayLines[0]);
+						//find number of questions from file
 						
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					new GUI(username,quizName, questionNum);
+					//launch quiz
 					frame.setVisible(false);
 					frame.dispose();
 				}
 				if(event.getSource() == scores){
-					
+					//scores pressed
 					try {
 						ReadFile file = new ReadFile(
 								quizName + "\\scores.txt");
 						String[] arrayLines = file.OpenFile();
 						new scoreFrame(arrayLines, username, quizName);
-						//System.out.println(""+ arrayLines[0]);
+						//launch High Score screen
 						frame.setVisible(false);
 						frame.dispose();
+						//delete frame
 						
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
 				}
 				if(event.getSource() == back){
 					new QuizChoose(username);
+					//launch choose quiz screen
 					frame.setVisible(false);
 					frame.dispose();
+					//delete frame
 					
+				}if (event.getSource() == edit) {
+					int questionNum = 2;
+					try {
+						ReadFile file = new ReadFile(
+								quizName + "\\questionNumber.txt");
+						String[] arrayLines = file.OpenFile();
+						String questionNumber = arrayLines[0];
+						questionNum = Integer.parseInt(questionNumber);
+						//get question number from file
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					new QuizMaker(username,quizName, questionNum);
+					//launch quiz maker screen
+					frame.setVisible(false);
+					frame.dispose();
+					//delete frame
 				}
 
 			}
@@ -98,12 +110,18 @@ public class Startup extends JFrame implements ActionListener {
 		scores.setSize(100, 50);
 		scores.setLocation(840, 530);
 		
+		edit.addActionListener(listener);
+		edit.setFocusable(false);
+		edit.setBackground(Color.GRAY);
+		edit.setSize(100, 50);
+		edit.setLocation(840, 580);
+		
 		back = new JButton("Back");
 		back.addActionListener(listener);
 		back.setFocusable(false);
 		back.setBackground(Color.GRAY);
 		back.setSize(100, 50);
-		back.setLocation(840, 580);
+		back.setLocation(840, 630);
 		
 		userName.setSize (600, 50);
 		userName.setLocation(1200, 200);
@@ -112,6 +130,7 @@ public class Startup extends JFrame implements ActionListener {
 		panel.add(start);
 		panel.add(userName);
 		panel.add(scores);
+		panel.add(edit);
 		frame.add(panel);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
@@ -119,20 +138,13 @@ public class Startup extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
 	private void prepareGUI() {
 		frame = new JFrame("Quizzle");
-		frame.setSize(height, width);
-		// frame.setLayout(new GridLayout(6,3));
-
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
-		panel.setLayout(new FlowLayout());
-
-		frame.add(panel);
 		frame.setVisible(true);
 	}
 

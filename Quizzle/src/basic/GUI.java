@@ -1,6 +1,5 @@
 package basic;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -132,7 +131,7 @@ public class GUI extends JFrame implements ActionListener {
 		panel.add(lastAnswer);
 		panel.add(lastAnswerButton);
 
-		/*BufferedImage pic = null;
+		BufferedImage pic = null;
 		try {
 			pic = ImageIO.read(new File("Quizzle Logo.png")); //locates image
 
@@ -143,7 +142,7 @@ public class GUI extends JFrame implements ActionListener {
 		JLabel picLabel = new JLabel(new ImageIcon(pic)); //creates Label for image
 		picLabel.setLocation(700, 10);
 		picLabel.setSize(500, 200);
-		panel.add(picLabel); //adds image*/
+		panel.add(picLabel); //adds image
 
 
 		frame.add(panel);//adds panel to frame
@@ -176,27 +175,21 @@ public class GUI extends JFrame implements ActionListener {
 			lastAnswerButton.setBackground(Color.GREEN);
 			lastAnswerButton.setText(" :)");//update the Button to show whether they got the previous answer right
 
-			if (qNumber == noOfQuestions ) {//checks to see if the quiz has ended
-					logScore(username,quizName,score);//logs the score if the quiz is over
-					JOptionPane.showMessageDialog(null, "You scored: " + score + " out of " + noOfQuestions );//tells them their score
-					end = true;//quiz has ended
-					new QuizChoose(username);//goes back to the frame where you choose the quiz
-					frame.setVisible(false);
-					frame.dispose();//removes frame
-					
-				
-			}
+			
 		} else {
 			lastAnswerButton.setBackground(Color.RED);
 			lastAnswerButton.setText(" :(");
-			if (qNumber == noOfQuestions ) {//checks to see if the quiz has ended
-				logScore(username,quizName,score);//logs the score if the quiz is over
-				JOptionPane.showMessageDialog(null, "You scored: " + score + " out of " + noOfQuestions );//tells them their score
-				end = true;//quiz has ended
-				new QuizChoose(username);//goes back to the frame where you choose the quiz
-				frame.setVisible(false);
-				frame.dispose();//removes frame
-			}
+			
+		}
+		if (qNumber == noOfQuestions ) {//checks to see if the quiz has ended
+			logScore(username,quizName,score);//logs the score if the quiz is over
+			JOptionPane.showMessageDialog(null, "You scored: " + score + " out of " + noOfQuestions );//tells them their score
+			end = true;//quiz has ended
+			new Startup(username, quizName);//goes back to the main menu
+			frame.setVisible(false);
+			frame.dispose();//removes frame
+			
+		
 		}
 		qNumber++;//increments question number
 		if (end == false){
@@ -210,21 +203,29 @@ public class GUI extends JFrame implements ActionListener {
 		int highScoreFromFile = 0;//int to check if the username is found if their new highscore exceeds their old one
 		try {
 			ReadFile file = new ReadFile(
-					quizName + "\\scores.txt");//reads file
-			String[] arrayLines = file.OpenFile();//array of lines from file
+					quizName + "\\scores.txt");
+			//reads file
+			String[] arrayLines = file.OpenFile();
+			//array of lines from file
 
-			String Highscore = "";//Initialises highscore string
-			String[] configstring = new String[2];// new string array of length 2
+			String Highscore = "";
+			//Initialises highscore string
+			String[] configstring = new String[2];
+			// new string array of length 2
 
 
-			WriteFile writer = new WriteFile(quizName + "\\scores.txt",false);//writer that deletes all previous things inside file
-			WriteFile writer1 = new WriteFile(quizName + "\\scores.txt",true);//writer that appends the file
-			writer.writeToFile("Username,Password");//set file title for comma separated format
-			for (int i = 0; i < arrayLines.length; i++) {// for loop for amount of items in array
-				if (arrayLines[i].contains(username)) {//checks to see if the username is inside the array
-					found = true;//sername found
-					configstring = arrayLines[i].split(",");//splits username and score
-
+			WriteFile writer = new WriteFile(quizName + "\\scores.txt",false);
+			//writer that deletes all previous things inside file
+			WriteFile writer1 = new WriteFile(quizName + "\\scores.txt",true);
+			//writer that appends the file
+			writer.writeToFile("Username,Score");
+			//set file title for comma separated format
+			for (int i = 0; i < arrayLines.length; i++) {
+				// for loop for amount of items in array
+				configstring = arrayLines[i].split(",");//splits username and score
+				if (configstring[0].contains(username)) {
+					//checks to see if the username is inside the array
+					found = true;//username found
 					Highscore = configstring[1];//finds score
 					highScoreFromFile = Integer.valueOf(Highscore);//turns the score string into int
 					if (highScoreFromFile >= score) {
@@ -235,11 +236,14 @@ public class GUI extends JFrame implements ActionListener {
 					}
 				} else if (i == 0) {
 					// do nothing because this is the title line
-				} else {
+				} else{
 					writer1.writeToFile(arrayLines[i]);
 					//if username is not found just write the array line
 				}
 
+			}if (found == false){
+				writer1.writeToFile(username + "," + score); 
+				//current score is greater therefore the old highscore is no longer a high score
 			}
 
 			

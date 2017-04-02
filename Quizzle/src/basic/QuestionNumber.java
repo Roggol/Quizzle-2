@@ -1,16 +1,10 @@
 package basic;
 
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
-
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,7 +21,6 @@ public class QuestionNumber extends JFrame implements ActionListener {
 	JTextField questionNumber;
 	JButton back;
 	String questionNo;
-	int questionNoInt = 0;
 	//initialise variables and objects
 
 	public QuestionNumber(final String username, final String quizName) {
@@ -42,31 +35,38 @@ public class QuestionNumber extends JFrame implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				if (event.getSource() == next) {// if next button is pressed
-					questionNo = questionNumber.getText();// get string from box
+				if (event.getSource() == next) {
+					// if next button is pressed
+					questionNo = questionNumber.getText();
+					// get string from box
 					try{
-						questionNoInt = Integer.parseInt(questionNo);//turn int into string
+						int questionNoInt = Integer.parseInt(questionNo);
+						//turn int into string
 						if(questionNoInt < 2){
-							questionNoInt = 2;//sets mininum number of questions as 2
+							questionNoInt = 2;
+							//sets mininum number of questions as 2
 							JOptionPane.showMessageDialog(null, "Integer too low. 2 Selected");
 						}else if(questionNoInt>20){
-							questionNoInt=20;//sets maximum number of questions as 20
+							questionNoInt=20;
+							//sets maximum number of questions as 20
 							JOptionPane.showMessageDialog(null, "Integer too high. 20 selected");
-						}else{//if number of questions is accepted, returns the number they input
+						}else{
+							//if number of questions is accepted, returns the number they input
 							JOptionPane.showMessageDialog(null, questionNoInt + " question(s) selected");
 						}
-						new QuizMaker(username,quizName,questionNoInt);//launches quizmaker
+						new QuizMaker(username,quizName,questionNoInt);
+						//launches quizmaker
 						try {
 							WriteFile writer = new WriteFile(quizName + "\\questionNumber.txt",true);
-							writer.writeToFile("" + questionNoInt);//writes the question number to file
+							writer.writeToFile("" + questionNoInt);
+							//writes the question number to file
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						frame.setVisible(false);
-						frame.dispose();//remove frame
+						frame.dispose();
+						//remove frame
 					}catch (java.lang.NumberFormatException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						JOptionPane.showMessageDialog(null, "Not an integer");
 
@@ -101,7 +101,6 @@ public class QuestionNumber extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
